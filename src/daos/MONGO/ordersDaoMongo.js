@@ -1,4 +1,4 @@
-const { ordersModel } = require('../models/order.models')
+const { ordersModel } = require('../../models/order.models')
 
 // Aggregation
 

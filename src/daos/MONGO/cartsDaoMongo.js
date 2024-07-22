@@ -1,6 +1,6 @@
-const { cartsModel } = require("../models/cart.models");
+const { cartsModel } = require("./models/cart.models");
 
-class CartManagerMongo {
+class CartsDaoMongo {
     constructor(){
         this.model = cartsModel;
     }
@@ -15,4 +15,4 @@ class CartManagerMongo {
     }
 }
 
-module.exports = { CartManagerMongo };
+module.exports = { CartsDaoMongo };

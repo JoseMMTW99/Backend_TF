@@ -1,9 +1,11 @@
 const express = require ('express');
 const { Router } = require('express');
-const { UserManagerMongo } = require('../dao/userManagerMongo');
+const { UsersDaoMongo } = require('../daos/MONGO/usersDaoMongo');
 const auth = require('../middlewares/auth.middleware');
+const UsersController = require('../controllers/users.controller');
 
 const router = Router();
+const userController = new UsersController();
 
 router.get('/', (req, res) => {
     res.render('home', {
@@ -28,24 +30,7 @@ router.get('/chat2', (req, res) => {
 })
 
 // Paginación Clase 17
-router.get('/users', auth, async (req, res) => {
-    const userService = new UserManagerMongo()
-    // ACA VEMOS COMO POMPAGINA MONgoOSE-PAGINATE
-    // const resp = await userService.getUsers()
-    // console.log(resp)
-    // http://localhost:8080/users?numPage=1&limit=10 nos da como devolucion 10 usuarios gracias a que recibe el parametro "limits"
-    const {numPage, limit} = req.query
-    const { docs, page, hasPrevPage, hasNextPage, prevPage, nextPage } = await userService.getUsers({limit, numPage})
-    res.render('users', {
-        styles: "users.css",
-        users: docs,
-        page,
-        hasPrevPage, 
-        hasNextPage,
-        prevPage,
-        nextPage
-    })
-})
+router.get('/users', auth, userController.getUsers);
 
 const user = {
     username: 'josemmtw99',
@@ -71,5 +56,9 @@ router.get('/register', (req, res) => {
     res.render('register', {styles: "register.css"})
 })
 
+// Pruebas Clase 25
+router.get('/pruebas', (req, res) => {
+    res.render('pruebas', {styles: "register.css"})
+})
 
 module.exports = router;

@@ -1,12 +1,12 @@
-const { userModel } = require("../models/users.models");
+const { userModel } = require("./models/users.models");
 
-class UserManagerMongo {
+class UsersDaoMongo {
     constructor() {
         this.model = userModel;
     }
 
     // Obtener todos los usuarios
-    getUsers = async ({limit = 5, numPage = 1}) => {
+    getAll = async ({limit = 5, numPage = 1}) => {
         try {
             // return await this.model.find(); Usabamos esto para que traiga todo antes de paginar
             // Limit viene si no lo definis en 10, y la pagina en 1. "Lean: true" se usa para que me funcione el json
@@ -17,18 +17,8 @@ class UserManagerMongo {
         }
     }
 
-    // Crear un nuevo usuario
-    createUser = async (userData) => {
-        try {
-            return await this.model.create(userData);
-        } catch (error) {
-            console.error('Error al crear usuario:', error);
-            throw error;
-        }
-    }
-
     // Clase 19 (get dinámico)
-    async getUserBy(filter) {
+    async getBy(filter) {
         try {
             return await this.model.findOne(filter); // Usar this.userModel para acceder al modelo de usuario
         } catch (error) {
@@ -38,7 +28,7 @@ class UserManagerMongo {
     }
 
     // Obtener un usuario por ID
-    getUserById = async (uid) => {
+    getById = async (uid) => {
         try {
             return await this.model.findById(uid);
         } catch (error) {
@@ -47,9 +37,18 @@ class UserManagerMongo {
         }
     }
 
+    // Crear un nuevo usuario
+    create = async (userData) => {
+        try {
+            return await this.model.create(userData);
+        } catch (error) {
+            console.error('Error al crear usuario:', error);
+            throw error;
+        }
+    }
 
     // Actualizar un usuario por ID
-    updateUser = async (uid, userData) => {
+    update = async (uid, userData) => {
         try {
             return await this.model.findByIdAndUpdate(uid, userData, { new: true });
         } catch (error) {
@@ -59,7 +58,7 @@ class UserManagerMongo {
     }
 
     // Eliminar un usuario por ID
-    deleteUser = async (uid) => {
+    remove = async (uid) => {
         try {
             return await this.model.findByIdAndDelete(uid);
         } catch (error) {
@@ -69,4 +68,4 @@ class UserManagerMongo {
     }
 }
 
-module.exports = { UserManagerMongo };
+module.exports = { UsersDaoMongo };

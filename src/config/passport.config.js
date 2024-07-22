@@ -1,6 +1,6 @@
 const passport = require('passport')
 const local = require('passport-local')
-const { UserManagerMongo } = require('../dao/userManagerMongo');
+const { UsersDaoMongo } = require('../daos/MONGO/usersDaoMongo');
 const { createHash, isValidPassword } = require('../utils/bcrypt');
 // Clase 22
 const jwt = require('passport-jwt')
@@ -10,7 +10,7 @@ const { PRIVATE_KEY } = require('../utils/jsonwebtoken');
 const GithubStrategy = require('passport-github2');
 
 const LocalStrategy = local.Strategy
-const userService = new UserManagerMongo();
+const userService = new UsersDaoMongo();
 
 // Clase 22
 const JWTStrategy = jwt.Strategy;

@@ -1,12 +1,12 @@
 const express = require("express");
 const { Router } = require("express");
-const auth = require("../middlewares/auth.middleware");
-const { UserManagerMongo } = require("../dao/userManagerMongo");
-const { createHash, isValidPassword } = require("../utils/bcrypt");
+const auth = require("../../middlewares/auth.middleware");
+const { UsersDaoMongo } = require("../../daos/MONGO/usersDaoMongo");
+const { createHash, isValidPassword } = require("../../utils/bcrypt");
 const passport = require("passport");
-const { generateToken, authToken } = require("../utils/jsonwebtoken");
-const passportCall = require("../utils/passportCall");
-const authorization = require("../utils/authorizationJWT");
+const { generateToken, authToken } = require("../../utils/jsonwebtoken");
+const passportCall = require("../../utils/passportCall");
+const authorization = require("../../utils/authorizationJWT");
 
 const router = Router();
 
@@ -61,7 +61,7 @@ router.get("/adminData", auth, (req, res) => {
 });
 
 // CLASE 19 Register y 21 JWT
-const userService = new UserManagerMongo();
+const userService = new UsersDaoMongo();
 
 router.post("/register", async (req, res) => {
   try {
@@ -111,7 +111,7 @@ router.post("/login", async (req, res) => {
         .status(401)
         .send({ status: "error", error: "Ingrese todos los datos necesarios" });
 
-    const userFound = await userService.getUserBy({ email });
+    const userFound = await userService.getBy({ email });
 
     if (!userFound)
       return res

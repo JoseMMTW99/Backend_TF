@@ -4,6 +4,10 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 const userCollection = 'usuarios'
 
 const UserSchema = new Schema({
+    full_name: {
+        type: String,
+        required: true
+    },
     first_name: {
         type: String,
         index: true // Esto es para indexar (para mejorar la velocidad de búsqueda en el array de usuarios)
